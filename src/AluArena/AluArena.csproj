@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<AssemblyName>AluArena</AssemblyName>
+		<Description>Arena Mod</Description>
+		<Version>0.1.0</Version>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<LangVersion>latest</LangVersion>
+		<RestoreAdditionalProjectSources>
+			https://api.nuget.org/v3/index.json;
+			https://nuget.bepinex.dev/v3/index.json
+		</RestoreAdditionalProjectSources>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<VRisingPath>D:\SteamLibrary\steamapps\common\VRising\VRising_Server</VRisingPath>
+		<UnhollowedDllPath>$(VRisingPath)\BepInEx\unhollowed</UnhollowedDllPath>
+		<PluginsPath>$(VRisingPath)\BepInEx\WetstonePlugins</PluginsPath>
+	</PropertyGroup>
+
+	<Target Name="CopyDLLs" AfterTargets="Build">
+		<Message Text="Copying output files to plugins folder." Importance="High" />
+		<Copy SourceFiles="$(TargetDir)$(ProjectName).dll;$(TargetDir)$(ProjectName).pdb" DestinationFolder="$(PluginsPath)" />
+		<Message Text="Copied." Importance="High" />
+	</Target>
+
+	<ItemGroup>
+	  <None Include="..\..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BepInEx.IL2CPP" Version="6.0.0-*" IncludeAssets="compile" />
+		<PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+		<PackageReference Include="VRising.Unhollowed.Client" Version="0.5.*" />
+		<PackageReference Include="VRising.VampireCommandFramework" Version="[0.4.5,)" />
+		<PackageReference Include="Wetstone" Version="1.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Systems\RankedSystem\" />
+	</ItemGroup>
+
+</Project>
